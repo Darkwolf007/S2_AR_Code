@@ -22,14 +22,25 @@
             window.dispatchEvent(resizeEvent);
         }, 3000);
     }; 
+
+    function togglescene(){
+        document.getElementById("neighbours").classList.toggle("hide") 
+        document.getElementById("angles").classList.toggle("hide")
+    }
     </script>  
+
+    
+
+    <style>
+        .hide {display: none;}
+    </style>
 </head>
 
 
  
 <body style='margin : 0px; overflow: hidden;'>
 
-    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;'>
+    <a-scene id = "neighbours" embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;'>
          
          <!-- Defines the barcode marker that we are going to use. We have just to specify its code, that in this case is 2 -->
         <!-- Repeating elements for each integer between 0 and 305 -->
@@ -47,8 +58,43 @@
             `);
             }
         </script>
+
+
   
          <!-- Define the camera of the scene -->
          <a-entity camera></a-entity>
     </a-scene>
+
+    <a-scene id = "angles" class="hide" embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;'>
+         
+       <script>
+           for (let i = 0; i <= 305; i++) {
+           document.write(`
+               <a-marker type="barcode" value="${i}">
+               <a-image
+                   position="0 0 0"
+                   rotation="-90 0 0"
+                   scale="2 2 2"
+                   src="https://ik.imagekit.io/bsanivviz/angle_dataset/F_${i}.png"
+               ></a-image>
+               </a-marker>
+           `);
+           }
+       </script>
+ 
+        <!-- Define the camera of the scene -->
+        <a-entity camera></a-entity>
+   </a-scene>
+
+    <button onclick="togglescene()" style="position: absolute;inset: auto auto 20px 50%;transform: translateX(-50%); 
+    background-color: #ff00a2;
+    border: none;
+    color: rgb(84, 0, 251);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    margin: 6px 2px;
+    cursor: pointer;">Click to toggle </button>
 </body>
